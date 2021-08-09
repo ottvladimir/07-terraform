@@ -3,7 +3,6 @@
 ## Задача 1. Регистрация в aws и знакомство с основами (необязательно, но крайне желательно).
 
 1. Устанавливаю aws-cli `pip install awscli`
-3. 
       ```bash
             $ aws configure list
                Name                    Value             Type    Location
@@ -48,19 +47,18 @@
                 ]
             }
        ```
-5. Добавьте переменные окружения 
-       ```bash
-       
-         export AWS_ACCESS_KEY_ID=(my access key id)
-         export AWS_SECRET_ACCESS_KEY=(my secret access key)
-             
-         $ aws configure list
-         Name                    Value             Type    Location
-         ----                    -----             ----    --------
-         profile                <not set>             None    None
-         access_key     ****************CM34              env    
-         secret_key     ****************LtDk              env    
-         region                us-west-2      config-file    ~/.aws/config
+5. Добавьте переменные окружения  
+      ```bash
+          export AWS_ACCESS_KEY_ID=(my access key id)
+          export AWS_SECRET_ACCESS_KEY=(my secret access key)
+        
+          $ aws configure list
+          Name                    Value             Type    Location
+          ----                    -----             ----    --------
+          profile                <not set>             None    None
+          access_key     ****************CM34              env    
+          secret_key     ****************LtDk              env    
+          region                us-west-2      config-file    ~/.aws/config
       ```  
 ## Задача 2. Созданием ec2 через терраформ. 
 
