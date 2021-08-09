@@ -52,12 +52,20 @@ secret_key     ****************LtDk shared-credentials-file
     ]
 }
 ```
-1. Добавьте переменные окружения 
+5. Добавьте переменные окружения 
     ```
-    export AWS_ACCESS_KEY_ID=(your access key id)
-    export AWS_SECRET_ACCESS_KEY=(your secret access key)
+    export AWS_ACCESS_KEY_ID=(my access key id)
+    export AWS_SECRET_ACCESS_KEY=(my secret access key)
     ```
-
+   ```bash
+   $ aws configure list
+      Name                    Value             Type    Location
+      ----                    -----             ----    --------
+   profile                <not set>             None    None
+   access_key     ****************CM34              env    
+   secret_key     ****************LtDk              env    
+   region                us-west-2      config-file    ~/.aws/config
+   ```
 ## Задача 2. Созданием ec2 через терраформ. 
 
 1. В каталоге `terraform` вашего основного репозитория, который был создан в начале курсе, создайте файл `main.tf` и `versions.tf`.
