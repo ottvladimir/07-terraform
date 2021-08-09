@@ -13,10 +13,11 @@
       secret_key     ****************LtDk shared-credentials-file    
           region                us-west-2      config-file    ~/.aws/config
       ```
-4.
-            `$ aws iam list-attached-user-policies --user-name terraform`
-          
+4.        
        ```json
+       $ aws iam list-attached-user-policies --user-name terraform
+       
+       
             {
                 "AttachedPolicies": [
                     {
