@@ -1,25 +1,18 @@
 # Домашнее задание к занятию "7.2. Облачные провайдеры и синтаксис Терраформ."
 
-Зачастую разбираться в новых инструментах гораздо интересней понимая то, как они работают изнутри. 
-Поэтому в рамках первого *необязательного* задания предлагается завести свою учетную запись в AWS (Amazon Web Services).
-
 ## Задача 1. Регистрация в aws и знакомство с основами (необязательно, но крайне желательно).
 
-Остальные задания можно будет выполнять и без этого аккаунта, но с ним можно будет увидеть полный цикл процессов. 
-
-AWS предоставляет достаточно много бесплатных ресурсов в первых год после регистрации, подробно описано [здесь](https://aws.amazon.com/free/).
-1. Создайте аккаут aws.
-2. Устанавливаю aws-cli `pip install awscli`
+1. Устанавливаю aws-cli `pip install awscli`
 3. 
-```bash
-$ aws configure list
-      Name                    Value             Type    Location
-      ----                    -----             ----    --------
-   profile                <not set>             None    None
-access_key     ****************CM34 shared-credentials-file    
-secret_key     ****************LtDk shared-credentials-file    
-    region                us-west-2      config-file    ~/.aws/config
-```
+      ```bash
+      $ aws configure list
+            Name                    Value             Type    Location
+            ----                    -----             ----    --------
+         profile                <not set>             None    None
+      access_key     ****************CM34 shared-credentials-file    
+      secret_key     ****************LtDk shared-credentials-file    
+          region                us-west-2      config-file    ~/.aws/config
+      ```
 4.
             `$ aws iam list-attached-user-policies --user-name terraform`
             ```json
@@ -53,18 +46,18 @@ secret_key     ****************LtDk shared-credentials-file
             }
             ```
 5. Добавьте переменные окружения 
-    ```
-    export AWS_ACCESS_KEY_ID=(my access key id)
-    export AWS_SECRET_ACCESS_KEY=(my secret access key)
-    ```
-   ```bash
-   $ aws configure list
-   Name                    Value             Type    Location
-   ----                    -----             ----    --------
-   profile                <not set>             None    None
-   access_key     ****************CM34              env    
-   secret_key     ****************LtDk              env    
-   region                us-west-2      config-file    ~/.aws/config
+          ```
+          export AWS_ACCESS_KEY_ID=(my access key id)
+          export AWS_SECRET_ACCESS_KEY=(my secret access key)
+          ```
+         ```bash
+         $ aws configure list
+         Name                    Value             Type    Location
+         ----                    -----             ----    --------
+         profile                <not set>             None    None
+         access_key     ****************CM34              env    
+         secret_key     ****************LtDk              env    
+         region                us-west-2      config-file    ~/.aws/config
    ```
 ## Задача 2. Созданием ec2 через терраформ. 
 
