@@ -9,24 +9,54 @@
 
 AWS предоставляет достаточно много бесплатных ресурсов в первых год после регистрации, подробно описано [здесь](https://aws.amazon.com/free/).
 1. Создайте аккаут aws.
-1. Установите c aws-cli https://aws.amazon.com/cli/.
-1. Выполните первичную настройку aws-sli https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html.
-1. Создайте IAM политику для терраформа c правами
-    * AmazonEC2FullAccess
-    * AmazonS3FullAccess
-    * AmazonDynamoDBFullAccess
-    * AmazonRDSFullAccess
-    * CloudWatchFullAccess
-    * IAMFullAccess
+2. Устанавливаю aws-cli `pip install awscli`
+3. 
+```bash
+$ aws configure list
+      Name                    Value             Type    Location
+      ----                    -----             ----    --------
+   profile                <not set>             None    None
+access_key     ****************CM34 shared-credentials-file    
+secret_key     ****************LtDk shared-credentials-file    
+    region                us-west-2      config-file    ~/.aws/config
+```
+4.
+`$ aws iam list-attached-user-policies --user-name terraform`
+```json
+{
+    "AttachedPolicies": [
+        {
+            "PolicyName": "AmazonRDSFullAccess",
+            "PolicyArn": "arn:aws:iam::aws:policy/AmazonRDSFullAccess"
+        },
+        {
+            "PolicyName": "AmazonEC2FullAccess",
+            "PolicyArn": "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
+        },
+        {
+            "PolicyName": "IAMFullAccess",
+            "PolicyArn": "arn:aws:iam::aws:policy/IAMFullAccess"
+        },
+        {
+            "PolicyName": "AmazonS3FullAccess",
+            "PolicyArn": "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+        },
+        {
+            "PolicyName": "CloudWatchFullAccess",
+            "PolicyArn": "arn:aws:iam::aws:policy/CloudWatchFullAccess"
+        },
+        {
+            "PolicyName": "AmazonDynamoDBFullAccess",
+            "PolicyArn": "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
+        }
+    ]
+}
+```
 1. Добавьте переменные окружения 
     ```
     export AWS_ACCESS_KEY_ID=(your access key id)
     export AWS_SECRET_ACCESS_KEY=(your secret access key)
     ```
-1. Создайте, остановите и удалите ec2 инстанс (любой с пометкой `free tier`) через веб интерфейс. 
-
-В виде результата задания приложите вывод команды `aws configure list`.
-
 
 ## Задача 2. Созданием ec2 через терраформ. 
 
