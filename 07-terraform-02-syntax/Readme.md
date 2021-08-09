@@ -21,37 +21,37 @@ secret_key     ****************LtDk shared-credentials-file
     region                us-west-2      config-file    ~/.aws/config
 ```
 4.
-`$ aws iam list-attached-user-policies --user-name terraform`
-```json
-{
-    "AttachedPolicies": [
-        {
-            "PolicyName": "AmazonRDSFullAccess",
-            "PolicyArn": "arn:aws:iam::aws:policy/AmazonRDSFullAccess"
-        },
-        {
-            "PolicyName": "AmazonEC2FullAccess",
-            "PolicyArn": "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
-        },
-        {
-            "PolicyName": "IAMFullAccess",
-            "PolicyArn": "arn:aws:iam::aws:policy/IAMFullAccess"
-        },
-        {
-            "PolicyName": "AmazonS3FullAccess",
-            "PolicyArn": "arn:aws:iam::aws:policy/AmazonS3FullAccess"
-        },
-        {
-            "PolicyName": "CloudWatchFullAccess",
-            "PolicyArn": "arn:aws:iam::aws:policy/CloudWatchFullAccess"
-        },
-        {
-            "PolicyName": "AmazonDynamoDBFullAccess",
-            "PolicyArn": "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
-        }
-    ]
-}
-```
+            `$ aws iam list-attached-user-policies --user-name terraform`
+            ```json
+            {
+                "AttachedPolicies": [
+                    {
+                        "PolicyName": "AmazonRDSFullAccess",
+                        "PolicyArn": "arn:aws:iam::aws:policy/AmazonRDSFullAccess"
+                    },
+                    {
+                        "PolicyName": "AmazonEC2FullAccess",
+                        "PolicyArn": "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
+                    },
+                    {
+                        "PolicyName": "IAMFullAccess",
+                        "PolicyArn": "arn:aws:iam::aws:policy/IAMFullAccess"
+                    },
+                    {
+                        "PolicyName": "AmazonS3FullAccess",
+                        "PolicyArn": "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+                    },
+                    {
+                        "PolicyName": "CloudWatchFullAccess",
+                        "PolicyArn": "arn:aws:iam::aws:policy/CloudWatchFullAccess"
+                    },
+                    {
+                        "PolicyName": "AmazonDynamoDBFullAccess",
+                        "PolicyArn": "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
+                    }
+                ]
+            }
+            ```
 5. Добавьте переменные окружения 
     ```
     export AWS_ACCESS_KEY_ID=(my access key id)
@@ -59,8 +59,8 @@ secret_key     ****************LtDk shared-credentials-file
     ```
    ```bash
    $ aws configure list
-      Name                    Value             Type    Location
-      ----                    -----             ----    --------
+   Name                    Value             Type    Location
+   ----                    -----             ----    --------
    profile                <not set>             None    None
    access_key     ****************CM34              env    
    secret_key     ****************LtDk              env    
