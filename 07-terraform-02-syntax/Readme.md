@@ -66,9 +66,24 @@
 1. Зарегистрируйте провайдер для [aws](https://registry.terraform.io/providers/hashicorp/aws/latest/docs). В файл `main.tf` добавьте
 блок `provider`, а в `versions.tf` блок `terraform` с вложенным блоком `required_providers`. Укажите любой выбранный вами регион 
 внутри блока `provider`.
-1. Внимание! В гит репозиторий нельзя пушить ваши личные ключи доступа к аккаунта. Поэтому в предыдущем задании мы указывали
-их в виде переменных окружения. 
-1. В файле `main.tf` воспользуйтесь блоком `data "aws_ami` для поиска ami образа последнего Ubuntu.  
+  ```
+      provider "aws" {
+        region = "us-west-2"
+      }
+
+      data "aws_ami" "ubuntu" {
+        owners = ["amazon"]
+        most_recent = true
+        filter {
+              name   = "name"
+              values = ["*ubuntu*"]
+              }
+      }
+      resource "aws_instance" "web" {
+          ami = "${data.aws_ami.ubuntu.id}"
+          instance_type = "t2.micro"
+      }
+  ```
 1. В файле `main.tf` создайте рессурс [ec2 instance](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance).
 Постарайтесь указать как можно больше параметров для его определения. Минимальный набор параметров указан в первом блоке 
 `Example Usage`, но желательно, указать большее количество параметров. 
