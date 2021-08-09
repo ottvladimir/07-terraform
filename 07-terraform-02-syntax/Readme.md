@@ -14,7 +14,8 @@
           region                us-west-2      config-file    ~/.aws/config
       ```
 4.        
-       ```json
+       ```bash
+       
        $ aws iam list-attached-user-policies --user-name terraform
        
        
@@ -50,11 +51,13 @@
 5. Добавьте переменные окружения 
           
        ```bash
+       
          export AWS_ACCESS_KEY_ID=(my access key id)
          export AWS_SECRET_ACCESS_KEY=(my secret access key)
        ```
    
        ```bash
+       
          $ aws configure list
          Name                    Value             Type    Location
          ----                    -----             ----    --------
