@@ -7,4 +7,9 @@ output "caller_user" {
 output "region_name" { 
   value = data.aws_region.current.name
 }
-
+output "private_ip" {
+ value = data.aws_instance.current.private_ip
+}
+output "subnet_id" {
+ value = data.aws_instance.current.subnet_id
+}

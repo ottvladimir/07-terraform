@@ -12,6 +12,16 @@
   }
   data "aws_caller_identity" "current" {}
   data "aws_region" "current" {}
+  data "aws_instance" "current" {
+    filter {
+      name = "tag:Name"
+      values = ["simpleserver"]
+      }
+    depends_on = [
+	aws_instance.web
+	]
+	
+    }
   resource "aws_instance" "web" {
       count = 2
       ami = "${data.aws_ami.ubuntu.id}"
@@ -28,4 +38,7 @@
 #!/bin/bash
 echo "Hello, world!"
 EOF
-	  }
+  tags = {
+           Name = "simpleserver"
+   }	 
+ }
