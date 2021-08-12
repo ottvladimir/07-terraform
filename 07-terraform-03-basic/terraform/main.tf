@@ -32,3 +32,6 @@ EOF
            Name = "simpleserver"
    }	 
  }
+resource "aws_s3_bucket" "web" {
+ bucket = "1-test32-test"
+}
