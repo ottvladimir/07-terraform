@@ -4,34 +4,22 @@
 
   data "aws_caller_identity" "current" {}
   data "aws_region" "current" {}
-  data "aws_instance" "current" {
-    filter {
-      name = "tag:Name"
-      values = ["simpleserver"]
-      }
-    depends_on = [
-	aws_instance.web
-	]
-	
-    }
-  resource "aws_instance" "web" {
-      count = 1
-      ami = "ami-03d5c68bab01f3496"
-      instance_type = "t2.micro"
-      disable_api_termination = false
-      ebs_block_device {
-                  device_name = "/dev/xvdb"
-                  volume_type = "gp2"
-                  volume_size = 10
-                    }
-      user_data = <<EOF
-#!/bin/bash
-echo "Hello, world!"
-EOF
+
+data "aws_ami" "amazon_linux" {
+  most_recent = true
+  owners      = ["amazon"]
+  filter {
+    name = "name"
+    values = ["amzn-ami-hvm-*-x86_64-gp2"] 
+  }
+}
+resource "aws_instance" "web" {
+  ami = data.aws_ami.amazon_linux.id 
+  instance_type = "t2.micro"
   tags = {
-           Name = "simpleserver"
-   }	 
- }
-resource "aws_s3_bucket" "web" {
- bucket = "1-test32-test"
+    name = "simpleserver"
+   }
+}
+resource "aws_s3_bucket" "web_states" {
+  bucket = "ovv-terraform-states"
 }
