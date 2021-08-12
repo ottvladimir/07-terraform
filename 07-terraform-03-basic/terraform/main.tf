@@ -2,14 +2,6 @@
     region = "us-west-2"
   }
 
-  data "aws_ami" "ubuntu" {
-    owners = ["amazon"]
-    most_recent = true
-    filter {
-          name   = "name"
-          values = ["*ubuntu*"]
-          }
-  }
   data "aws_caller_identity" "current" {}
   data "aws_region" "current" {}
   data "aws_instance" "current" {
@@ -23,11 +15,9 @@
 	
     }
   resource "aws_instance" "web" {
-      count = 2
-      ami = "${data.aws_ami.ubuntu.id}"
+      count = 1
+      ami = "ami-03d5c68bab01f3496"
       instance_type = "t2.micro"
-      ipv6_address_count = 1
-      cpu_core_count = 1
       disable_api_termination = false
       ebs_block_device {
                   device_name = "/dev/xvdb"
