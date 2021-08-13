@@ -10,7 +10,7 @@ locals {
 }
 locals {
   instances_count = {
-    stage = 2
-    prod = 3
+    stage = {2}
+    prod = {3}
   }
 }
