@@ -24,7 +24,7 @@ resource "aws_instance" "web" {
 resource "aws_instance" "tes" {
   ami = data.aws_ami.amazon_linux.id
   instance_type = local.web_instance_type_map[terraform.workspace]
-  for_each = local.instances_count
+  for_each = local.instances_count[terraform.workspace]
   count = each.key
   tags = {
     name = "testforeachserver-${terraform.workspace}"
