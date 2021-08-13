@@ -15,9 +15,19 @@ data "aws_ami" "amazon_linux" {
 }
 resource "aws_instance" "web" {
   ami = data.aws_ami.amazon_linux.id 
-  instance_type = "t2.micro"
+  instance_type = local.web_instance_type_map[terraform.workspace]
+  count = local.web_instance_count_map[terraform.workspace]
   tags = {
-    name = "simpleserver"
+    name = "simpleserver-${terraform.workspace}"
+   }
+}
+resource "aws_instance" "tes" {
+  ami = data.aws_ami.amazon_linux.id
+  instance_type = local.web_instance_type_map[terraform.workspace]
+  for_each = local.instances_count
+  count = each.key
+  tags = {
+    name = "testforeachserver-${terraform.workspace}"
    }
 }
 resource "aws_s3_bucket" "web_states" {
