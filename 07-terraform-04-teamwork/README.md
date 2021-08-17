@@ -5,22 +5,104 @@
 
 ## Задача 2. Написать серверный конфиг для атлантиса. 
 
-Смысл задания – познакомиться с документацией 
-о [серверной](https://www.runatlantis.io/docs/server-side-repo-config.html) конфигурации и конфигурации уровня 
- [репозитория](https://www.runatlantis.io/docs/repo-level-atlantis-yaml.html).
+server.yaml
+```yaml
+# repos lists the config for specific repos.
+repos:
+# атлантис должен работать только для репозиториев в моем github, в ветке main
+ - id: https://github.com/ottvladimir
+  branch: main
+  #
+  # apply только для approved изменений
+  apply_requirements: [approved, mergeable]
+  #workflow по умолчанию
+  workflow: my-custom-workflow
 
-Создай `server.yaml` который скажет атлантису:
-1. Укажите, что атлантис должен работать только для репозиториев в вашем github (или любом другом) аккаунте.
-1. На стороне клиентского конфига разрешите изменять `workflow`, то есть для каждого репозитория можно 
-будет указать свои дополнительные команды. 
-1. В `workflow` используемом по-умолчанию сделайте так, что бы во время планирования не происходил `lock` состояния.
+  # allowed_overrides specifies which keys can be overridden by this repo in
+  # its atlantis.yaml file.
+  allowed_overrides: [apply_requirements, workflow, delete_source_branch_on_merge]
 
-Создай `atlantis.yaml` который, если поместить в корень terraform проекта, скажет атлантису:
-1. Надо запускать планирование и аплай для двух воркспейсов `stage` и `prod`.
-1. Необходимо включить автопланирование при изменении любых файлов `*.tf`.
+  # allowed_workflows specifies which workflows the repos that match 
+  # are allowed to select.
+  allowed_workflows: [my-custom-workflow]
 
-В качестве результата приложите ссылку на файлы `server.yaml` и `atlantis.yaml`.
+  # allow_custom_workflows defines whether this repo can define its own
+  # workflows. If false (default), the repo can only use server-side defined
+  # workflows.
+  allow_custom_workflows: true
 
+  # delete_source_branch_on_merge defines whether the source branch would be deleted on merge
+  # If false (default), the source branch won't be deleted on merge
+  delete_source_branch_on_merge: true
+workflows:
+  my-custom-workflow:
+    plan:
+      steps:
+      - run: echo "Hello, terraform"
+      - init
+      - plan:
+          extra_args: ["-lock", "false"]
+      - run: my-custom-command arg1 arg2
+    apply:
+      steps:
+      - run: echo hi
+      - apply
+```
+
+atlantis.yaml
+```yaml
+version: 3
+automerge: true
+delete_source_branch_on_merge: true
+projects:
+- name: myprojectStage
+  dir: .
+  workspace: stage
+  terraform_version: v0.11.0
+  delete_source_branch_on_merge: true
+  autoplan:
+    when_modified: ["*.tf"]
+    enabled: true
+  apply_requirements: [mergeable, approved]
+  workflow: myworkflow
+- name: myprojectProd
+  dir: .
+  workspace: prod
+  terraform_version: v0.11.0
+  delete_source_branch_on_merge: true
+  autoplan:
+    when_modified: ["*.tf", "../modules/**.tf"]
+    enabled: true
+  apply_requirements: [mergeable, approved]
+  workflow: stage
+
+workflows:
+  stage:
+    plan:
+      steps:
+      - run: my-custom-command arg1 arg2
+      - init
+      - plan:
+          extra_args: ["-lock", "false"]
+      - run: my-custom-command arg1 arg2
+    apply:
+      steps:
+      - run: echo Stage
+      - apply
+workflows:
+  prod:
+    plan:
+      steps:
+      - run: my-custom-command arg1 arg2
+      - init
+      - plan:
+          extra_args: ["-lock", "false"]
+      - run: my-custom-command arg1 arg2
+    apply:
+      steps:
+      - run: echo Prod
+      - apply
+```
 ## Задача 3. Знакомство с каталогом модулей. 
 
 1. В [каталоге модулей](https://registry.terraform.io/browse/modules) найдите официальный модуль от aws для создания
