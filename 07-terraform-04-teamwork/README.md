@@ -105,11 +105,21 @@ workflows:
 ```
 ## Задача 3. Знакомство с каталогом модулей. 
 
-1. В [каталоге модулей](https://registry.terraform.io/browse/modules) найдите официальный модуль от aws для создания
-`ec2` инстансов. 
-2. Изучите как устроен модуль. Задумайтесь, будете ли в своем проекте использовать этот модуль или непосредственно 
-ресурс `aws_instance` без помощи модуля?
-3. В рамках предпоследнего задания был создан ec2 при помощи ресурса `aws_instance`. 
-Создайте аналогичный инстанс при помощи найденного модуля.   
+```tf
+module "ec2_cluster" {
+  source                 = "terraform-aws-modules/ec2-instance/aws"
+  version                = "~> 2.0"
 
-В качестве результата задания приложите ссылку на созданный блок конфигураций. 
+  name                   =  "made_by_ec2_module"
+  instance_count         = 1
+
+  ami                    = data.aws_ami.amazon_linux.id
+  instance_type          = local.web_instance_type_map[terraform.workspace]
+  monitoring             = false
+  vpc_security_group_ids = ["sg-c6e4fdcf"]
+
+  tags = {
+    Terraform   = "true"
+    Environment = "test"
+  }
+}
